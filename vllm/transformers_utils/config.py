@@ -1,8 +1,10 @@
 import contextlib
 from pathlib import Path
-from typing import Dict, Optional, Type, Union
+from typing import Any, Dict, Optional, Type, Union
 
 from transformers import GenerationConfig, PretrainedConfig
+from transformers.models.auto.image_processing_auto import (
+    get_image_processor_config)
 from transformers.models.auto.modeling_auto import (
     MODEL_FOR_CAUSAL_LM_MAPPING_NAMES)
 
@@ -95,6 +97,14 @@ def get_config(
             config.update({key: value})
 
     return config
+
+
+def get_hf_image_processor_config(
+    model: Union[str, Path],
+    revision: Optional[str] = None,
+    **kwargs,
+) -> Dict[str, Any]:
+    return get_image_processor_config(model, revision=revision, **kwargs)
 
 
 def get_hf_text_config(config: PretrainedConfig):
